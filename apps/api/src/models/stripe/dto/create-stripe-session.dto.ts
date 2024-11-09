@@ -1,9 +1,9 @@
 // import { TotalPrice } from '@autospace/util/types'
-import { CreateBookingInput } from 'src/models/bookings/graphql/dtos/create-booking.input'
+import { CreateBookingInput } from 'src/models/bookings/graphql/dtos/create-booking.input';
 
 export class CreateStripeDto {
-  id: string
+  id: string;
   // totalPriceObj: TotalPrice
-  totalPriceObj: any
-  bookingData: CreateBookingInput
+  totalPriceObj: any;
+  bookingData: CreateBookingInput;
 }

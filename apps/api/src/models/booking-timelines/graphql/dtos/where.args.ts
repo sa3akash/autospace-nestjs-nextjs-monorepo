@@ -1,18 +1,18 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { $Enums, Prisma } from '@prisma/client'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { $Enums, Prisma } from '@prisma/client';
 import {
   DateTimeFilter,
   IntFilter,
   RestrictProperties,
   StringFilter,
-} from 'src/common/dtos/common.input'
-import { BookingRelationFilter } from 'src/models/bookings/graphql/dtos/where.args'
-import { ManagerRelationFilter } from 'src/models/managers/graphql/dtos/where.args'
-import { ValetRelationFilter } from 'src/models/valets/graphql/dtos/where.args'
+} from 'src/common/dtos/common.input';
+import { BookingRelationFilter } from 'src/models/bookings/graphql/dtos/where.args';
+import { ManagerRelationFilter } from 'src/models/managers/graphql/dtos/where.args';
+import { ValetRelationFilter } from 'src/models/valets/graphql/dtos/where.args';
 
 @InputType()
 export class BookingTimelineWhereUniqueInput {
-  id: number
+  id: number;
 }
 
 @InputType()
@@ -23,20 +23,20 @@ export class BookingTimelineWhereInputStrict
       Prisma.BookingTimelineWhereInput
     >
 {
-  id: IntFilter
-  timestamp: DateTimeFilter
+  id: IntFilter;
+  timestamp: DateTimeFilter;
   @Field(() => $Enums.BookingStatus)
-  status: $Enums.BookingStatus
-  bookingId: IntFilter
-  valetId: StringFilter
-  managerId: StringFilter
-  Booking: BookingRelationFilter
-  Valet: ValetRelationFilter
-  Manager: ManagerRelationFilter
+  status: $Enums.BookingStatus;
+  bookingId: IntFilter;
+  valetId: StringFilter;
+  managerId: StringFilter;
+  Booking: BookingRelationFilter;
+  Valet: ValetRelationFilter;
+  Manager: ManagerRelationFilter;
 
-  AND: BookingTimelineWhereInput[]
-  OR: BookingTimelineWhereInput[]
-  NOT: BookingTimelineWhereInput[]
+  AND: BookingTimelineWhereInput[];
+  OR: BookingTimelineWhereInput[];
+  NOT: BookingTimelineWhereInput[];
 }
 
 @InputType()
@@ -46,13 +46,13 @@ export class BookingTimelineWhereInput extends PartialType(
 
 @InputType()
 export class BookingTimelineListRelationFilter {
-  every?: BookingTimelineWhereInput
-  some?: BookingTimelineWhereInput
-  none?: BookingTimelineWhereInput
+  every?: BookingTimelineWhereInput;
+  some?: BookingTimelineWhereInput;
+  none?: BookingTimelineWhereInput;
 }
 
 @InputType()
 export class BookingTimelineRelationFilter {
-  is?: BookingTimelineWhereInput
-  isNot?: BookingTimelineWhereInput
+  is?: BookingTimelineWhereInput;
+  isNot?: BookingTimelineWhereInput;
 }

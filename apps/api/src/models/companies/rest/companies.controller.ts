@@ -7,22 +7,22 @@ import {
   Param,
   Delete,
   Query,
-} from '@nestjs/common'
+} from '@nestjs/common';
 
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { ApiTags } from '@nestjs/swagger'
-import { CreateCompany } from './dtos/create.dto'
-import { CompanyQueryDto } from './dtos/query.dto'
-import { UpdateCompany } from './dtos/update.dto'
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateCompany } from './dtos/create.dto';
+import { CompanyQueryDto } from './dtos/query.dto';
+import { UpdateCompany } from './dtos/update.dto';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-} from '@nestjs/swagger'
-import { CompanyEntity } from './entity/company.entity'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { GetUserType } from 'src/common/types'
-import { checkRowLevelPermission } from 'src/common/auth/util'
+} from '@nestjs/swagger';
+import { CompanyEntity } from './entity/company.entity';
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
+import { GetUserType } from 'src/common/types';
+import { checkRowLevelPermission } from 'src/common/auth/util';
 
 @ApiTags('companies')
 @Controller('companies')
@@ -34,7 +34,7 @@ export class CompaniesController {
   @ApiCreatedResponse({ type: CompanyEntity })
   @Post()
   create(@Body() createCompanyDto: CreateCompany) {
-    return this.prisma.company.create({ data: createCompanyDto })
+    return this.prisma.company.create({ data: createCompanyDto });
   }
 
   @ApiOkResponse({ type: [CompanyEntity] })
@@ -44,13 +44,13 @@ export class CompaniesController {
       ...(skip ? { skip: +skip } : null),
       ...(take ? { take: +take } : null),
       ...(sortBy ? { orderBy: { [sortBy]: order || 'asc' } } : null),
-    })
+    });
   }
 
   @ApiOkResponse({ type: CompanyEntity })
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.prisma.company.findUnique({ where: { id } })
+    return this.prisma.company.findUnique({ where: { id } });
   }
 
   @ApiOkResponse({ type: CompanyEntity })
@@ -65,15 +65,15 @@ export class CompaniesController {
     const company = await this.prisma.company.findUnique({
       where: { id },
       include: { Managers: true },
-    })
+    });
     checkRowLevelPermission(
       user,
       company.Managers.map((manager) => manager.id),
-    )
+    );
     return this.prisma.company.update({
       where: { id },
       data: updateCompanyDto,
-    })
+    });
   }
 
   @ApiBearerAuth()
@@ -83,11 +83,11 @@ export class CompaniesController {
     const company = await this.prisma.company.findUnique({
       where: { id },
       include: { Managers: true },
-    })
+    });
     checkRowLevelPermission(
       user,
       company.Managers.map((manager) => manager.id),
-    )
-    return this.prisma.company.delete({ where: { id } })
+    );
+    return this.prisma.company.delete({ where: { id } });
   }
 }

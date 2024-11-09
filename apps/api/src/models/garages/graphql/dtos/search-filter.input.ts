@@ -1,11 +1,11 @@
-import { InputType, ObjectType, PickType } from '@nestjs/graphql'
-import { FindManyGarageArgs } from './find.args'
-import { Slot } from 'src/models/slots/graphql/entity/slot.entity'
+import { InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { FindManyGarageArgs } from './find.args';
+import { Slot } from 'src/models/slots/graphql/entity/slot.entity';
 
 @InputType()
 export class DateFilterInput {
-  start: string
-  end: string
+  start: string;
+  end: string;
 }
 
 @InputType()
@@ -20,5 +20,5 @@ export class MinimalSlotGroupBy extends PickType(Slot, [
   'type',
   'pricePerHour',
 ]) {
-  count: number
+  count: number;
 }

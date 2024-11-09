@@ -5,18 +5,18 @@ import {
   Args,
   Parent,
   ResolveField,
-} from '@nestjs/graphql'
-import { CustomersService } from './customers.service'
-import { Customer } from './entity/customer.entity'
-import { FindManyCustomerArgs, FindUniqueCustomerArgs } from './dtos/find.args'
-import { CreateCustomerInput } from './dtos/create-customer.input'
-import { UpdateCustomerInput } from './dtos/update-customer.input'
-import { checkRowLevelPermission } from 'src/common/auth/util'
-import { GetUserType } from 'src/common/types'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { User } from 'src/models/users/graphql/entity/user.entity'
-import { Booking } from 'src/models/bookings/graphql/entity/booking.entity'
+} from '@nestjs/graphql';
+import { CustomersService } from './customers.service';
+import { Customer } from './entity/customer.entity';
+import { FindManyCustomerArgs, FindUniqueCustomerArgs } from './dtos/find.args';
+import { CreateCustomerInput } from './dtos/create-customer.input';
+import { UpdateCustomerInput } from './dtos/update-customer.input';
+import { checkRowLevelPermission } from 'src/common/auth/util';
+import { GetUserType } from 'src/common/types';
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { User } from 'src/models/users/graphql/entity/user.entity';
+import { Booking } from 'src/models/bookings/graphql/entity/booking.entity';
 
 @Resolver(() => Customer)
 export class CustomersResolver {
@@ -31,18 +31,18 @@ export class CustomersResolver {
     @Args('createCustomerInput') args: CreateCustomerInput,
     @GetUser() user: GetUserType,
   ) {
-    checkRowLevelPermission(user, args.id)
-    return this.customersService.create(args)
+    checkRowLevelPermission(user, args.id);
+    return this.customersService.create(args);
   }
 
   @Query(() => [Customer], { name: 'customers' })
   findAll(@Args() args: FindManyCustomerArgs) {
-    return this.customersService.findAll(args)
+    return this.customersService.findAll(args);
   }
 
   @Query(() => Customer, { name: 'customer' })
   findOne(@Args() args: FindUniqueCustomerArgs) {
-    return this.customersService.findOne(args)
+    return this.customersService.findOne(args);
   }
 
   @AllowAuthenticated()
@@ -53,9 +53,9 @@ export class CustomersResolver {
   ) {
     const customer = await this.prisma.customer.findUnique({
       where: { id: args.id },
-    })
-    checkRowLevelPermission(user, customer.id)
-    return this.customersService.update(args)
+    });
+    checkRowLevelPermission(user, customer.id);
+    return this.customersService.update(args);
   }
 
   @AllowAuthenticated()
@@ -64,18 +64,18 @@ export class CustomersResolver {
     @Args() args: FindUniqueCustomerArgs,
     @GetUser() user: GetUserType,
   ) {
-    const customer = await this.prisma.customer.findUnique(args)
-    checkRowLevelPermission(user, customer.id)
-    return this.customersService.remove(args)
+    const customer = await this.prisma.customer.findUnique(args);
+    checkRowLevelPermission(user, customer.id);
+    return this.customersService.remove(args);
   }
 
   @ResolveField(() => User, { nullable: true })
   user(@Parent() customer: Customer) {
-    return this.prisma.user.findUnique({ where: { id: customer.id } })
+    return this.prisma.user.findUnique({ where: { id: customer.id } });
   }
 
   @ResolveField(() => [Booking])
   bookings(@Parent() customer: Customer) {
-    return this.prisma.booking.findMany({ where: { customerId: customer.id } })
+    return this.prisma.booking.findMany({ where: { customerId: customer.id } });
   }
 }

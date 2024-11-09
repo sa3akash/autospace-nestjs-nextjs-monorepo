@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { FindManyBookingArgs, FindUniqueBookingArgs } from './dtos/find.args'
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { CreateBookingInput } from './dtos/create-booking.input'
-import { UpdateBookingInput } from './dtos/update-booking.input'
-import { SlotType } from '@prisma/client'
-import { generateSixDigitNumber } from 'src/common/util'
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { FindManyBookingArgs, FindUniqueBookingArgs } from './dtos/find.args';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { CreateBookingInput } from './dtos/create-booking.input';
+import { UpdateBookingInput } from './dtos/update-booking.input';
+import { SlotType } from '@prisma/client';
+import { generateSixDigitNumber } from 'src/common/util';
 
 @Injectable()
 export class BookingsService {
@@ -24,25 +24,25 @@ export class BookingsService {
     // Create customer
     const customer = await this.prisma.customer.findUnique({
       where: { id: customerId },
-    })
+    });
 
     if (!customer?.id) {
       await this.prisma.customer.create({
         data: { id: customerId },
-      })
+      });
     }
 
-    const passcode = generateSixDigitNumber().toString()
+    const passcode = generateSixDigitNumber().toString();
 
-    let startDate: Date
-    let endDate: Date
+    let startDate: Date;
+    let endDate: Date;
 
     // If startTime or endTime are strings, convert them to Date objects
     if (typeof startTime === 'string') {
-      startDate = new Date(startTime)
+      startDate = new Date(startTime);
     }
     if (typeof endTime === 'string') {
-      endDate = new Date(endTime)
+      endDate = new Date(endTime);
     }
 
     const slot = await this.getFreeSlot({
@@ -50,10 +50,10 @@ export class BookingsService {
       startTime: startDate,
       garageId,
       type,
-    })
+    });
 
     if (!slot) {
-      throw new NotFoundException('No slots found.')
+      throw new NotFoundException('No slots found.');
     }
 
     return this.prisma.$transaction(async (tx) => {
@@ -72,33 +72,33 @@ export class BookingsService {
             ? { ValetAssignment: { create: valetAssignment } }
             : null),
         },
-      })
+      });
       await tx.bookingTimeline.create({
         data: { bookingId: booking.id, status: 'BOOKED' },
-      })
+      });
 
-      return booking
-    })
+      return booking;
+    });
   }
 
   findAll(args: FindManyBookingArgs) {
-    return this.prisma.booking.findMany(args)
+    return this.prisma.booking.findMany(args);
   }
 
   findOne(args: FindUniqueBookingArgs) {
-    return this.prisma.booking.findUnique(args)
+    return this.prisma.booking.findUnique(args);
   }
 
   update(updateBookingInput: UpdateBookingInput) {
-    const { id, ...data } = updateBookingInput
+    const { id, ...data } = updateBookingInput;
     return this.prisma.booking.update({
       where: { id },
       data: data,
-    })
+    });
   }
 
   remove(args: FindUniqueBookingArgs) {
-    return this.prisma.booking.delete(args)
+    return this.prisma.booking.delete(args);
   }
 
   getFreeSlot({
@@ -107,10 +107,10 @@ export class BookingsService {
     endTime,
     type,
   }: {
-    garageId: number
-    startTime: string | Date
-    endTime: string | Date
-    type: SlotType
+    garageId: number;
+    startTime: string | Date;
+    endTime: string | Date;
+    type: SlotType;
   }) {
     return this.prisma.slot.findFirst({
       where: {
@@ -125,6 +125,6 @@ export class BookingsService {
           },
         },
       },
-    })
+    });
   }
 }

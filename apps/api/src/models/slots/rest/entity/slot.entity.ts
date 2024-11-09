@@ -1,22 +1,21 @@
-import { Field } from '@nestjs/graphql'
-import { $Enums, Slot } from '@prisma/client'
-import { IsDate, IsString, IsInt, IsOptional } from 'class-validator'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import { $Enums, Slot } from '@prisma/client';
+import { IsOptional } from 'class-validator';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 export class SlotEntity implements RestrictProperties<SlotEntity, Slot> {
-  id: number
-  createdAt: Date
-  updatedAt: Date
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
   @IsOptional()
-  displayName: string
-  pricePerHour: number
+  displayName: string;
+  pricePerHour: number;
   @IsOptional()
-  length: number
+  length: number;
   @IsOptional()
-  width: number
+  width: number;
   @IsOptional()
-  height: number
+  height: number;
 
-  type: $Enums.SlotType
-  garageId: number
+  type: $Enums.SlotType;
+  garageId: number;
 }

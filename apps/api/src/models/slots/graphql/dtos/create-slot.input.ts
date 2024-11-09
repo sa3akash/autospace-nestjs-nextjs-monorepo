@@ -1,5 +1,5 @@
-import { InputType, OmitType, PickType } from '@nestjs/graphql'
-import { Slot } from '../entity/slot.entity'
+import { InputType, OmitType } from '@nestjs/graphql';
+import { Slot } from '../entity/slot.entity';
 
 @InputType()
 export class CreateSlotInput extends OmitType(
@@ -14,5 +14,5 @@ export class CreateSlotInputWithoutGarageId extends OmitType(
   ['garageId'],
   InputType,
 ) {
-  count: number
+  count: number;
 }

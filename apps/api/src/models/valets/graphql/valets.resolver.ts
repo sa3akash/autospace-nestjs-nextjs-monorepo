@@ -1,18 +1,18 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
-import { ValetsService } from './valets.service'
-import { Valet } from './entity/valet.entity'
-import { FindManyValetArgs, FindUniqueValetArgs } from './dtos/find.args'
-import { CreateValetInput } from './dtos/create-valet.input'
-import { UpdateValetInput } from './dtos/update-valet.input'
-import { checkRowLevelPermission } from 'src/common/auth/util'
-import { GetUserType } from 'src/common/types'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { ValetWhereInput } from './dtos/where.args'
-import { Booking } from 'src/models/bookings/graphql/entity/booking.entity'
-import { PaginationInput } from 'src/common/dtos/common.input'
-import { BookingStatus } from '@prisma/client'
-import { BadGatewayException } from '@nestjs/common'
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { ValetsService } from './valets.service';
+import { Valet } from './entity/valet.entity';
+import { FindManyValetArgs, FindUniqueValetArgs } from './dtos/find.args';
+import { CreateValetInput } from './dtos/create-valet.input';
+import { UpdateValetInput } from './dtos/update-valet.input';
+import { checkRowLevelPermission } from 'src/common/auth/util';
+import { GetUserType } from 'src/common/types';
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ValetWhereInput } from './dtos/where.args';
+import { Booking } from 'src/models/bookings/graphql/entity/booking.entity';
+import { PaginationInput } from 'src/common/dtos/common.input';
+import { BookingStatus } from '@prisma/client';
+import { BadGatewayException } from '@nestjs/common';
 
 @Resolver(() => Valet)
 export class ValetsResolver {
@@ -29,17 +29,17 @@ export class ValetsResolver {
   ) {
     const company = await this.prisma.company.findFirst({
       where: { Managers: { some: { id: user.id } } },
-    })
+    });
 
     if (!company) {
-      throw new BadGatewayException('You do not have a company.')
+      throw new BadGatewayException('You do not have a company.');
     }
-    return this.valetsService.create({ ...args, companyId: company.id })
+    return this.valetsService.create({ ...args, companyId: company.id });
   }
 
   @Query(() => [Valet], { name: 'valets' })
   findAll(@Args() args: FindManyValetArgs) {
-    return this.valetsService.findAll(args)
+    return this.valetsService.findAll(args);
   }
 
   @AllowAuthenticated()
@@ -62,14 +62,14 @@ export class ValetsResolver {
           },
         },
       },
-    })
+    });
 
     checkRowLevelPermission(user, [
       ...booking.Slot.Garage.Company.Managers.map((manager) => manager.id),
       ...booking.Slot.Garage.Company.Valets.map((valet) => valet.id),
-    ])
+    ]);
 
-    const [updatedBooking, bookingTimeline] = await this.prisma.$transaction([
+    const [updatedBooking] = await this.prisma.$transaction([
       this.prisma.booking.update({
         where: { id: bookingId },
         data: {
@@ -93,9 +93,9 @@ export class ValetsResolver {
           status,
         },
       }),
-    ])
+    ]);
 
-    return updatedBooking
+    return updatedBooking;
   }
 
   @AllowAuthenticated('manager', 'admin')
@@ -106,11 +106,11 @@ export class ValetsResolver {
   ) {
     const company = await this.prisma.company.findFirst({
       where: { Managers: { some: { id: user.id } } },
-    })
+    });
     return this.valetsService.findAll({
       ...args,
       where: { ...args.where, companyId: { equals: company.id } },
-    })
+    });
   }
 
   @AllowAuthenticated()
@@ -121,22 +121,22 @@ export class ValetsResolver {
   ) {
     const company = await this.prisma.company.findFirst({
       where: { Managers: { some: { id: user.id } } },
-    })
+    });
 
     return this.prisma.valet.count({
       where: { ...where, companyId: { equals: company.id } },
-    })
+    });
   }
 
   @Query(() => Valet, { name: 'valet' })
   findOne(@Args() args: FindUniqueValetArgs) {
-    return this.valetsService.findOne(args)
+    return this.valetsService.findOne(args);
   }
 
   @AllowAuthenticated()
   @Query(() => Valet, { name: 'valetMe', nullable: true })
   valetMe(@GetUser() user: GetUserType) {
-    return this.valetsService.findOne({ where: { id: user.id } })
+    return this.valetsService.findOne({ where: { id: user.id } });
   }
 
   @AllowAuthenticated('valet')
@@ -145,7 +145,7 @@ export class ValetsResolver {
     @Args() { skip, take }: PaginationInput,
     @GetUser() user: GetUserType,
   ) {
-    const valet = await this.valetsService.validValet(user.id)
+    const valet = await this.valetsService.validValet(user.id);
     return this.prisma.booking.findMany({
       skip,
       take,
@@ -156,13 +156,13 @@ export class ValetsResolver {
           pickupValetId: null,
         },
       },
-    })
+    });
   }
 
   @AllowAuthenticated()
   @Query(() => Number)
   async valetPickupsTotal(@GetUser() user: GetUserType) {
-    const valet = await this.valetsService.validValet(user.id)
+    const valet = await this.valetsService.validValet(user.id);
     return this.prisma.booking.count({
       where: {
         Slot: { Garage: { companyId: valet.companyId } },
@@ -171,7 +171,7 @@ export class ValetsResolver {
           pickupValetId: null,
         },
       },
-    })
+    });
   }
 
   @AllowAuthenticated()
@@ -180,7 +180,7 @@ export class ValetsResolver {
     @Args() { skip, take }: PaginationInput,
     @GetUser() user: GetUserType,
   ) {
-    const valet = await this.valetsService.validValet(user.id)
+    const valet = await this.valetsService.validValet(user.id);
 
     return this.prisma.booking.findMany({
       skip,
@@ -192,13 +192,13 @@ export class ValetsResolver {
           returnValetId: null,
         },
       },
-    })
+    });
   }
 
   @AllowAuthenticated()
   @Query(() => Number)
   async valetDropsTotal(@GetUser() user: GetUserType) {
-    const valet = await this.valetsService.validValet(user.id)
+    const valet = await this.valetsService.validValet(user.id);
 
     return this.prisma.booking.count({
       where: {
@@ -208,7 +208,7 @@ export class ValetsResolver {
           returnValetId: null,
         },
       },
-    })
+    });
   }
 
   @AllowAuthenticated()
@@ -219,9 +219,9 @@ export class ValetsResolver {
   ) {
     const valet = await this.prisma.valet.findUnique({
       where: { id: args.id },
-    })
-    checkRowLevelPermission(user, valet.id)
-    return this.valetsService.update(args)
+    });
+    checkRowLevelPermission(user, valet.id);
+    return this.valetsService.update(args);
   }
 
   @AllowAuthenticated()
@@ -230,8 +230,8 @@ export class ValetsResolver {
     @Args() args: FindUniqueValetArgs,
     @GetUser() user: GetUserType,
   ) {
-    const valet = await this.prisma.valet.findUnique(args)
-    checkRowLevelPermission(user, valet.id)
-    return this.valetsService.remove(args)
+    const valet = await this.prisma.valet.findUnique(args);
+    checkRowLevelPermission(user, valet.id);
+    return this.valetsService.remove(args);
   }
 }

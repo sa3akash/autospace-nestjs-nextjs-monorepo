@@ -1,9 +1,9 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
-import { BookingOrderByRelationAggregateInput } from 'src/models/bookings/graphql/dtos/order-by.args'
-import { ReviewOrderByRelationAggregateInput } from 'src/models/reviews/graphql/dtos/order-by.args'
-import { UserOrderByWithRelationInput } from 'src/models/users/graphql/dtos/order-by.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
+import { BookingOrderByRelationAggregateInput } from 'src/models/bookings/graphql/dtos/order-by.args';
+import { ReviewOrderByRelationAggregateInput } from 'src/models/reviews/graphql/dtos/order-by.args';
+import { UserOrderByWithRelationInput } from 'src/models/users/graphql/dtos/order-by.args';
 
 @InputType()
 export class CustomerOrderByWithRelationInputStrict
@@ -13,18 +13,18 @@ export class CustomerOrderByWithRelationInputStrict
       Prisma.CustomerOrderByWithRelationInput
     >
 {
-  User: UserOrderByWithRelationInput
+  User: UserOrderByWithRelationInput;
   @Field(() => Prisma.SortOrder)
-  id: Prisma.SortOrder
+  id: Prisma.SortOrder;
   @Field(() => Prisma.SortOrder)
-  createdAt: Prisma.SortOrder
+  createdAt: Prisma.SortOrder;
   @Field(() => Prisma.SortOrder)
-  updatedAt: Prisma.SortOrder
+  updatedAt: Prisma.SortOrder;
   @Field(() => Prisma.SortOrder)
-  displayName: Prisma.SortOrder
+  displayName: Prisma.SortOrder;
 
-  Bookings: BookingOrderByRelationAggregateInput
-  Reviews: ReviewOrderByRelationAggregateInput
+  Bookings: BookingOrderByRelationAggregateInput;
+  Reviews: ReviewOrderByRelationAggregateInput;
   // Todo: Add below field decorator to the SortOrder properties.
   // @Field(() => Prisma.SortOrder)
 }
@@ -37,5 +37,5 @@ export class CustomerOrderByWithRelationInput extends PartialType(
 @InputType()
 export class CustomerOrderByRelationAggregateInput {
   @Field(() => Prisma.SortOrder)
-  _count?: Prisma.SortOrder
+  _count?: Prisma.SortOrder;
 }

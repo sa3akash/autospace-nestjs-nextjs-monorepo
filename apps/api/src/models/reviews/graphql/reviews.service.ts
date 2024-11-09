@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common'
-import { FindManyReviewArgs, FindUniqueReviewArgs } from './dtos/find.args'
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { CreateReviewInput } from './dtos/create-review.input'
-import { UpdateReviewInput } from './dtos/update-review.input'
+import { Injectable } from '@nestjs/common';
+import { FindManyReviewArgs, FindUniqueReviewArgs } from './dtos/find.args';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { CreateReviewInput } from './dtos/create-review.input';
+import { UpdateReviewInput } from './dtos/update-review.input';
 
 @Injectable()
 export class ReviewsService {
@@ -10,26 +10,26 @@ export class ReviewsService {
   create(createReviewInput: CreateReviewInput) {
     return this.prisma.review.create({
       data: createReviewInput,
-    })
+    });
   }
 
   findAll(args: FindManyReviewArgs) {
-    return this.prisma.review.findMany(args)
+    return this.prisma.review.findMany(args);
   }
 
   findOne(args: FindUniqueReviewArgs) {
-    return this.prisma.review.findUnique(args)
+    return this.prisma.review.findUnique(args);
   }
 
   update(updateReviewInput: UpdateReviewInput) {
-    const { id, ...data } = updateReviewInput
+    const { id, ...data } = updateReviewInput;
     return this.prisma.review.update({
       where: { id },
       data: data,
-    })
+    });
   }
 
   remove(args: FindUniqueReviewArgs) {
-    return this.prisma.review.delete(args)
+    return this.prisma.review.delete(args);
   }
 }

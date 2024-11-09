@@ -7,22 +7,22 @@ import {
   Param,
   Delete,
   Query,
-} from '@nestjs/common'
+} from '@nestjs/common';
 
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { ApiTags } from '@nestjs/swagger'
-import { CreateSlot } from './dtos/create.dto'
-import { SlotQueryDto } from './dtos/query.dto'
-import { UpdateSlot } from './dtos/update.dto'
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateSlot } from './dtos/create.dto';
+import { SlotQueryDto } from './dtos/query.dto';
+import { UpdateSlot } from './dtos/update.dto';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-} from '@nestjs/swagger'
-import { SlotEntity } from './entity/slot.entity'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { GetUserType } from 'src/common/types'
-import { checkRowLevelPermission } from 'src/common/auth/util'
+} from '@nestjs/swagger';
+import { SlotEntity } from './entity/slot.entity';
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
+import { GetUserType } from 'src/common/types';
+import { checkRowLevelPermission } from 'src/common/auth/util';
 
 @ApiTags('slots')
 @Controller('slots')
@@ -40,12 +40,12 @@ export class SlotsController {
     const garage = await this.prisma.garage.findUnique({
       where: { id: createSlotDto.garageId },
       include: { Company: { include: { Managers: true } } },
-    })
+    });
     checkRowLevelPermission(
       user,
       garage.Company.Managers.map((manager) => manager.id),
-    )
-    return this.prisma.slot.create({ data: createSlotDto })
+    );
+    return this.prisma.slot.create({ data: createSlotDto });
   }
 
   @ApiOkResponse({ type: [SlotEntity] })
@@ -55,13 +55,13 @@ export class SlotsController {
       ...(skip ? { skip: +skip } : null),
       ...(take ? { take: +take } : null),
       ...(sortBy ? { orderBy: { [sortBy]: order || 'asc' } } : null),
-    })
+    });
   }
 
   @ApiOkResponse({ type: SlotEntity })
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.prisma.slot.findUnique({ where: { id } })
+    return this.prisma.slot.findUnique({ where: { id } });
   }
 
   @ApiOkResponse({ type: SlotEntity })
@@ -84,15 +84,15 @@ export class SlotsController {
           },
         },
       },
-    })
+    });
     checkRowLevelPermission(
       user,
       slot.Garage.Company.Managers.map((man) => man.id),
-    )
+    );
     return this.prisma.slot.update({
       where: { id },
       data: updateSlotDto,
-    })
+    });
   }
 
   @ApiBearerAuth()
@@ -110,11 +110,11 @@ export class SlotsController {
           },
         },
       },
-    })
+    });
     checkRowLevelPermission(
       user,
       slot.Garage.Company.Managers.map((man) => man.id),
-    )
-    return this.prisma.slot.delete({ where: { id } })
+    );
+    return this.prisma.slot.delete({ where: { id } });
   }
 }

@@ -1,7 +1,7 @@
-import { PartialType } from '@nestjs/swagger'
-import { CreateAdmin } from './create.dto'
-import { Admin } from '@prisma/client'
+import { PartialType } from '@nestjs/swagger';
+import { CreateAdmin } from './create.dto';
+import { Admin } from '@prisma/client';
 
 export class UpdateAdmin extends PartialType(CreateAdmin) {
-  id: Admin['id']
+  id: Admin['id'];
 }

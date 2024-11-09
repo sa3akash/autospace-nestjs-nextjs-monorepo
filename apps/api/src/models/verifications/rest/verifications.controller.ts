@@ -7,20 +7,20 @@ import {
   Param,
   Delete,
   Query,
-} from '@nestjs/common'
+} from '@nestjs/common';
 
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { ApiTags } from '@nestjs/swagger'
-import { CreateVerification } from './dtos/create.dto'
-import { VerificationQueryDto } from './dtos/query.dto'
-import { UpdateVerification } from './dtos/update.dto'
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateVerification } from './dtos/create.dto';
+import { VerificationQueryDto } from './dtos/query.dto';
+import { UpdateVerification } from './dtos/update.dto';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-} from '@nestjs/swagger'
-import { VerificationEntity } from './entity/verification.entity'
-import { AllowAuthenticated } from 'src/common/auth/auth.decorator'
+} from '@nestjs/swagger';
+import { VerificationEntity } from './entity/verification.entity';
+import { AllowAuthenticated } from 'src/common/auth/auth.decorator';
 
 @ApiTags('verifications')
 @Controller('verifications')
@@ -32,7 +32,7 @@ export class VerificationsController {
   @ApiCreatedResponse({ type: VerificationEntity })
   @Post()
   create(@Body() createVerificationDto: CreateVerification) {
-    return this.prisma.verification.create({ data: createVerificationDto })
+    return this.prisma.verification.create({ data: createVerificationDto });
   }
 
   @ApiOkResponse({ type: [VerificationEntity] })
@@ -42,13 +42,13 @@ export class VerificationsController {
       ...(skip ? { skip: +skip } : null),
       ...(take ? { take: +take } : null),
       ...(sortBy ? { orderBy: { [sortBy]: order || 'asc' } } : null),
-    })
+    });
   }
 
   @ApiOkResponse({ type: VerificationEntity })
   @Get(':garageId')
   findOne(@Param('garageId') garageId: number) {
-    return this.prisma.verification.findUnique({ where: { garageId } })
+    return this.prisma.verification.findUnique({ where: { garageId } });
   }
 
   @ApiOkResponse({ type: VerificationEntity })
@@ -62,13 +62,13 @@ export class VerificationsController {
     return this.prisma.verification.update({
       where: { garageId },
       data: updateVerificationDto,
-    })
+    });
   }
 
   @ApiBearerAuth()
   @AllowAuthenticated('admin')
   @Delete(':garageId')
   async remove(@Param('garageId') garageId: number) {
-    return this.prisma.verification.delete({ where: { garageId } })
+    return this.prisma.verification.delete({ where: { garageId } });
   }
 }

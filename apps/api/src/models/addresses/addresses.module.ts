@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common'
-import { AddressesService } from './graphql/addresses.service'
-import { AddressesResolver } from './graphql/addresses.resolver'
-import { AddressesController } from './rest/addresses.controller'
+import { Module } from '@nestjs/common';
+import { AddressesService } from './graphql/addresses.service';
+import { AddressesResolver } from './graphql/addresses.resolver';
+import { AddressesController } from './rest/addresses.controller';
 
 @Module({
   providers: [AddressesResolver, AddressesService],

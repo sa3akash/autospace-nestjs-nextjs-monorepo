@@ -1,24 +1,24 @@
-import { Field, ObjectType } from '@nestjs/graphql'
-import { ValetAssignment as ValetAssignmentType } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import { Field, ObjectType } from '@nestjs/graphql';
+import { ValetAssignment as ValetAssignmentType } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 @ObjectType()
 export class ValetAssignment
   implements RestrictProperties<ValetAssignment, ValetAssignmentType>
 {
-  bookingId: number
-  createdAt: Date
-  updatedAt: Date
-  pickupLat: number
-  pickupLng: number
+  bookingId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  pickupLat: number;
+  pickupLng: number;
   @Field({ nullable: true })
-  returnLat: number
+  returnLat: number;
   @Field({ nullable: true })
-  returnLng: number
+  returnLng: number;
   @Field({ nullable: true })
-  pickupValetId: string
+  pickupValetId: string;
   @Field({ nullable: true })
-  returnValetId: string
+  returnValetId: string;
   // Todo Add below to make optional fields optional.
   // @Field({ nullable: true })
 }

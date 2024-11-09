@@ -1,15 +1,15 @@
-import { Valet } from '@prisma/client'
-import { IsDate, IsString, IsInt, IsOptional } from 'class-validator'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import { Valet } from '@prisma/client';
+import { IsOptional } from 'class-validator';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 export class ValetEntity implements RestrictProperties<ValetEntity, Valet> {
-  id: string
-  createdAt: Date
-  updatedAt: Date
-  displayName: string
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  displayName: string;
   @IsOptional()
-  image: string
-  licenceID: string
+  image: string;
+  licenceID: string;
   @IsOptional()
-  companyId: number
+  companyId: number;
 }

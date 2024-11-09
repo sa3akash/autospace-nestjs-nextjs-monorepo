@@ -1,15 +1,15 @@
-import { Manager } from '@prisma/client'
-import { IsDate, IsString, IsInt, IsOptional } from 'class-validator'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import { Manager } from '@prisma/client';
+import { IsOptional } from 'class-validator';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 export class ManagerEntity
   implements RestrictProperties<ManagerEntity, Manager>
 {
-  id: string
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
   @IsOptional()
-  displayName: string
+  displayName: string;
   @IsOptional()
-  companyId: number
+  companyId: number;
 }

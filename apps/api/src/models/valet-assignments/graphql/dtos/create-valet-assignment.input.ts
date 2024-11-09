@@ -1,5 +1,5 @@
-import { Field, InputType, OmitType, PickType } from '@nestjs/graphql'
-import { ValetAssignment } from '../entity/valet-assignment.entity'
+import { InputType, OmitType } from '@nestjs/graphql';
+import { ValetAssignment } from '../entity/valet-assignment.entity';
 
 @InputType()
 export class CreateValetAssignmentInput extends OmitType(
@@ -10,8 +10,8 @@ export class CreateValetAssignmentInput extends OmitType(
 
 @InputType()
 export class CreateValetAssignmentInputWithoutBookingId {
-  pickupLat: number
-  pickupLng: number
-  returnLat?: number
-  returnLng?: number
+  pickupLat: number;
+  pickupLng: number;
+  returnLat?: number;
+  returnLng?: number;
 }

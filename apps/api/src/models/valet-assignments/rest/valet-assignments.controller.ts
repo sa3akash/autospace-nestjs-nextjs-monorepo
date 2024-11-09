@@ -7,22 +7,22 @@ import {
   Param,
   Delete,
   Query,
-} from '@nestjs/common'
+} from '@nestjs/common';
 
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { ApiTags } from '@nestjs/swagger'
-import { CreateValetAssignment } from './dtos/create.dto'
-import { ValetAssignmentQueryDto } from './dtos/query.dto'
-import { UpdateValetAssignment } from './dtos/update.dto'
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateValetAssignment } from './dtos/create.dto';
+import { ValetAssignmentQueryDto } from './dtos/query.dto';
+import { UpdateValetAssignment } from './dtos/update.dto';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-} from '@nestjs/swagger'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { GetUserType } from 'src/common/types'
-import { checkRowLevelPermission } from 'src/common/auth/util'
-import { ValetAssignmentEntity } from './entity/valet-assignment.entity'
+} from '@nestjs/swagger';
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
+import { GetUserType } from 'src/common/types';
+import { checkRowLevelPermission } from 'src/common/auth/util';
+import { ValetAssignmentEntity } from './entity/valet-assignment.entity';
 
 @ApiTags('valet-assignments')
 @Controller('valet-assignments')
@@ -40,10 +40,10 @@ export class ValetAssignmentsController {
     checkRowLevelPermission(user, [
       createValetAssignmentDto.pickupValetId,
       createValetAssignmentDto.returnValetId,
-    ])
+    ]);
     return this.prisma.valetAssignment.create({
       data: createValetAssignmentDto,
-    })
+    });
   }
 
   @ApiOkResponse({ type: [ValetAssignmentEntity] })
@@ -53,13 +53,13 @@ export class ValetAssignmentsController {
       ...(skip ? { skip: +skip } : null),
       ...(take ? { take: +take } : null),
       ...(sortBy ? { orderBy: { [sortBy]: order || 'asc' } } : null),
-    })
+    });
   }
 
   @ApiOkResponse({ type: ValetAssignmentEntity })
   @Get(':bookingId')
   findOne(@Param('bookingId') bookingId: number) {
-    return this.prisma.valetAssignment.findUnique({ where: { bookingId } })
+    return this.prisma.valetAssignment.findUnique({ where: { bookingId } });
   }
 
   @ApiOkResponse({ type: ValetAssignmentEntity })
@@ -73,15 +73,15 @@ export class ValetAssignmentsController {
   ) {
     const valetAssignment = await this.prisma.valetAssignment.findUnique({
       where: { bookingId },
-    })
+    });
     checkRowLevelPermission(user, [
       valetAssignment.pickupValetId,
       valetAssignment.returnValetId,
-    ])
+    ]);
     return this.prisma.valetAssignment.update({
       where: { bookingId },
       data: updateValetAssignmentDto,
-    })
+    });
   }
 
   @ApiBearerAuth()
@@ -93,11 +93,11 @@ export class ValetAssignmentsController {
   ) {
     const valetAssignment = await this.prisma.valetAssignment.findUnique({
       where: { bookingId },
-    })
+    });
     checkRowLevelPermission(user, [
       valetAssignment.pickupValetId,
       valetAssignment.returnValetId,
-    ])
-    return this.prisma.valetAssignment.delete({ where: { bookingId } })
+    ]);
+    return this.prisma.valetAssignment.delete({ where: { bookingId } });
   }
 }

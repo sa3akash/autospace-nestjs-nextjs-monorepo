@@ -1,18 +1,18 @@
-import { Field, ObjectType } from '@nestjs/graphql'
-import { Garage as GarageType, SlotType } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Garage as GarageType, SlotType } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 @ObjectType()
 export class Garage implements RestrictProperties<Garage, GarageType> {
-  id: number
-  createdAt: Date
-  updatedAt: Date
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
   @Field({ nullable: true })
-  displayName: string
+  displayName: string;
   @Field({ nullable: true })
-  description: string
-  images: string[]
-  companyId: number
+  description: string;
+  images: string[];
+  companyId: number;
   // Todo Add below to make optional fields optional.
   // @Field({ nullable: true })
 }
@@ -20,6 +20,6 @@ export class Garage implements RestrictProperties<Garage, GarageType> {
 @ObjectType()
 export class SlotTypeCount {
   @Field(() => SlotType)
-  type: SlotType
-  count?: number
+  type: SlotType;
+  count?: number;
 }
