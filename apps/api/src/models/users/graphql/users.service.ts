@@ -27,6 +27,7 @@ export class UsersService {
     name,
     id,
     type,
+    providerAccountId,
   }: RegisterWithProviderInput) {
     const existingUser = await this.prisma.credentials.findUnique({
       where: { id: id },
@@ -44,6 +45,7 @@ export class UsersService {
         AuthProvider: {
           create: {
             type,
+            providerAccountId: providerAccountId,
           },
         },
       },

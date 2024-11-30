@@ -21,4 +21,5 @@ export class AuthProvider {
   id: string;
   @Field(() => $Enums.AuthProviderType)
   type: $Enums.AuthProviderType;
+  providerAccountId: string;
 }

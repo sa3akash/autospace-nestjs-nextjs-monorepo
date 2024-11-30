@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { AuthProvider, User } from './entity/user.entity';
 import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args';
@@ -13,6 +20,10 @@ import { checkRowLevelPermission } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
+import { Admin } from 'src/models/admins/graphql/entity/admin.entity';
+import { Manager } from 'src/models/managers/graphql/entity/manager.entity';
+import { Valet } from 'src/models/valets/graphql/entity/valet.entity';
+import { Customer } from 'src/models/customers/graphql/entity/customer.entity';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -82,27 +93,38 @@ export class UsersResolver {
   }
 
   @Query(() => AuthProvider, { name: 'getAuthProvider', nullable: true })
-  getAuthProvider(@Args('id') id: string) {
-    return this.prisma.authProvider.findUnique({ where: { id } });
+  async getAuthProvider(
+    @Args('id') id?: string,
+    @Args('providerAccountId') providerAccountId?: string,
+  ) {
+    if (id) {
+      return await this.prisma.authProvider.findUnique({
+        where: { id: id },
+      });
+    } else {
+      return await this.prisma.authProvider.findUnique({
+        where: { providerAccountId: providerAccountId },
+      });
+    }
   }
 
-  // @ResolveField(() => Admin, { nullable: true })
-  // admin(@Parent() user: User) {
-  //   return this.prisma.admin.findUnique({ where: { id: user.id } });
-  // }
+  @ResolveField(() => Admin, { nullable: true })
+  admin(@Parent() user: User) {
+    return this.prisma.admin.findUnique({ where: { id: user.id } });
+  }
 
-  // @ResolveField(() => Manager, { nullable: true })
-  // manager(@Parent() user: User) {
-  //   return this.prisma.manager.findUnique({ where: { id: user.id } });
-  // }
+  @ResolveField(() => Manager, { nullable: true })
+  manager(@Parent() user: User) {
+    return this.prisma.manager.findUnique({ where: { id: user.id } });
+  }
 
-  // @ResolveField(() => Valet, { nullable: true })
-  // valet(@Parent() user: User) {
-  //   return this.prisma.valet.findUnique({ where: { id: user.id } });
-  // }
+  @ResolveField(() => Valet, { nullable: true })
+  valet(@Parent() user: User) {
+    return this.prisma.valet.findUnique({ where: { id: user.id } });
+  }
 
-  // @ResolveField(() => Customer, { nullable: true })
-  // customer(@Parent() user: User) {
-  //   return this.prisma.customer.findUnique({ where: { id: user.id } });
-  // }
+  @ResolveField(() => Customer, { nullable: true })
+  customer(@Parent() user: User) {
+    return this.prisma.customer.findUnique({ where: { id: user.id } });
+  }
 }

@@ -53,7 +53,7 @@ model Credentials {
 
 model AuthProvider {
     id String @id
-
+    providerAccountId String? @unique
     type AuthProviderType
     User User             @relation(fields: [id], references: [id])
 }

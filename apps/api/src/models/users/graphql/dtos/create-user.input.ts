@@ -20,6 +20,7 @@ export class RegisterWithProviderInput extends PickType(
 ) {
   @Field(() => AuthProviderType)
   type: AuthProviderType;
+  providerAccountId: string;
 }
 
 @InputType()
