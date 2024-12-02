@@ -60,18 +60,27 @@ export const authOptions: NextAuthConfig = {
           });
 
           if (!data?.login.token || error) {
-            console.log(error);
             throw new Error(
-              'Authentication failed: Invalid credentials or user not found',
+              error ||
+                'Authentication failed: Invalid credentials or user not found',
             );
           }
           const id = data.login.user.id;
           const image = data.login.user.image;
           const name = data.login.user.name;
 
-          return { id, name, image, email: email as string };
-        } catch (error) {}
-        return null;
+          return {
+            id,
+            name,
+            image,
+            email: email as string,
+            token: data.login.token,
+          };
+        } catch (error) {
+          throw new Error(
+            `${error || 'Authentication failed: Invalid credentials or user not found'}`,
+          );
+        }
       },
     }),
   ],
@@ -103,7 +112,7 @@ export const authOptions: NextAuthConfig = {
   //       { id: sub, ...tokenProps,exp: expirationTimestamp},
   //       `${secret}`,
   //       {
-  //         algorithm: 'HS256',
+  //         algorithm: 'HS512',
   //       },
   //     );
 
@@ -116,19 +125,22 @@ export const authOptions: NextAuthConfig = {
   //     return signToken;
   //   },
   //   // Custom JWT decoding function
-  //   async decode({ token, secret }) {
+  //   async decode({ token, secret }):Promise<JWT | null> {
   //     if (!token) {
   //       throw new Error('Token is undefined');
   //     }
   //     try {
+
   //       const decodedToken = jwt.verify(token, `${secret}`, {
-  //         algorithms: ['HS256'],
+  //         algorithms: ['HS512'],
   //       });
+
   //       console.log('decode',{
   //         decodedToken,
   //         token,
   //         secret
   //       })
+
   //       return decodedToken as JWT
   //     } catch (error) {
   //       console.error('JWT decode error:', error); // Log the error message
@@ -200,14 +212,19 @@ export const authOptions: NextAuthConfig = {
           id: token.sub as string,
           email: token.email as string,
           name: token.name as string,
-        };
+          token: token.token as string,
+        } as any;
       }
       return session;
+    },
+
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
   },
 
   // Configure custom pages
-  // pages: {
-  //   signIn: '/signIn',
-  // },
+  pages: {
+    signIn: '/login',
+  },
 };

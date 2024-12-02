@@ -1,21 +1,19 @@
 {
-  "name": "@autospace/web",
+  "name": "@autospace/ui",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "tsc": "tsc --noEmit",
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.11.10",
-    "@autospace/network": "*",
-    "@autospace/sample": "*",
-    "@autospace/ui": "*",
+    "@autospace/forms": "*",
+    "@autospace/utils": "*",
+    "@headlessui/react": "^2.2.0",
+    "@tabler/icons-react": "^3.23.0",
     "next": "15.0.3",
-    "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },

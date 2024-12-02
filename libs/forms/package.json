@@ -1,0 +1,17 @@
+{
+  "name": "@autospace/forms",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
+    "react-hook-form": "^7.53.2",
+    "zod": "^3.23.8"
+  }
+}

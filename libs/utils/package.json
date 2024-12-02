@@ -1,0 +1,19 @@
+{
+  "name": "@autospace/utils",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/pluralize": "^0.0.33"
+  }
+}

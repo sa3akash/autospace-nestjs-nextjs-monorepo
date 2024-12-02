@@ -8,6 +8,7 @@ import {
 } from '@apollo/client';
 import { ReactNode } from 'react';
 import { setContext } from '@apollo/client/link/context';
+import { SessionProvider, getSession } from 'next-auth/react';
 
 export interface IApolloProviderProps {
   children: ReactNode;
@@ -19,7 +20,9 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = await fetch('/api/auth/token').then((res) => res.json());
+    const session = (await getSession()) as any;
+
+    const token = session?.user?.token;
 
     return {
       headers: {
@@ -33,5 +36,9 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
-  return <Provider client={apolloClient}>{children}</Provider>;
+  return (
+    <Provider client={apolloClient}>
+      <SessionProvider>{children}</SessionProvider>
+    </Provider>
+  );
 };
