@@ -7,8 +7,6 @@ import {
   LoginDocument,
   RegisterWithProviderDocument,
 } from '@autospace/network/src/gql/generated';
-import * as jwt from 'jsonwebtoken';
-import { JWT } from 'next-auth/jwt';
 import { fetchGraphQL } from '../fetch';
 
 const MAX_AGE = 1 * 24 * 60 * 60;
@@ -213,7 +211,7 @@ export const authOptions: NextAuthConfig = {
           email: token.email as string,
           name: token.name as string,
           token: token.token as string,
-        } as any;
+        };
       }
       return session;
     },

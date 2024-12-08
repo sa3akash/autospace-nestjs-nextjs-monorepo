@@ -20,8 +20,9 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const session = (await getSession()) as any;
+    const session = await getSession();
 
+    // const token = (session?.user as { token: string })?.token;
     const token = session?.user?.token;
 
     return {

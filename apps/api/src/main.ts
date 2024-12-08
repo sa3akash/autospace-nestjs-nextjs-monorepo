@@ -5,7 +5,9 @@ const port = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:3001',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Autospace | Shakil Ahmed')
