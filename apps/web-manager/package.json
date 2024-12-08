@@ -1,12 +1,11 @@
 {
-  "name": "@autospace/web",
+  "name": "@autospace/web-manager",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
-    "tsc": "tsc --noEmit",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,19 +13,19 @@
     "@autospace/network": "*",
     "@autospace/sample": "*",
     "@autospace/ui": "*",
-    "next": "15.0.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "next-auth": "^5.0.0-beta.25",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "next": "15.0.4"
   },
   "devDependencies": {
+    "typescript": "^5",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.3",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "eslint": "^8",
+    "eslint-config-next": "15.0.4"
   }
 }
