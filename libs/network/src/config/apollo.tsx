@@ -22,7 +22,6 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
   const authLink = setContext(async (_, { headers }) => {
     const session = await getSession();
 
-    // const token = (session?.user as { token: string })?.token;
     const token = session?.user?.token;
 
     return {
@@ -37,7 +36,9 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
+
   return (
+    // @ts-ignore
     <Provider client={apolloClient}>
       <SessionProvider>{children}</SessionProvider>
     </Provider>

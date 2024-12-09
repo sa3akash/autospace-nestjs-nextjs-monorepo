@@ -20,8 +20,7 @@ export class GarageWhereUniqueInput {
 
 @InputType()
 export class GarageWhereInputStrict
-  implements
-    RestrictProperties<GarageWhereInputStrict, Prisma.GarageWhereInput>
+  implements RestrictProperties<GarageWhereInputStrict, Prisma.GarageWhereInput>
 {
   id: IntFilter;
   createdAt: DateTimeFilter;

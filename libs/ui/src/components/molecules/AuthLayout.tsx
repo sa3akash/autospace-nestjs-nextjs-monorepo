@@ -8,9 +8,14 @@ import { GoogleButton } from './GoogleButton';
 export interface IAuthLayoutProps {
   children: ReactNode;
   title: string;
+  showSocial?: boolean;
 }
 
-export const AuthLayout = ({ title, children }: IAuthLayoutProps) => {
+export const AuthLayout = ({
+  title,
+  children,
+  showSocial = true,
+}: IAuthLayoutProps) => {
   return (
     <div className="relative h-[calc(100vh-4rem)]  ">
       {/* <CarScene
@@ -25,15 +30,17 @@ export const AuthLayout = ({ title, children }: IAuthLayoutProps) => {
               <BrandIcon /> <div>{title}</div>
             </h1>
             {children}
-            <div className="mt-4 text-sm text-gray-300">
-              <div className="flex flex-col items-center mb-4">
-                <div className="mb-1 text-xs">Or, continue with</div>
-                <GoogleButton />
+            {showSocial && (
+              <div className="mt-4 text-sm text-gray-300">
+                <div className="flex flex-col items-center mb-4">
+                  <div className="mb-1 text-xs">Or, continue with</div>
+                  <GoogleButton />
+                </div>
+                <Link href="/" className="flex items-center gap-2">
+                  <IconArrowBack className="w-4 h-4" /> Back to home
+                </Link>
               </div>
-              <Link href="/" className="flex items-center gap-2">
-                <IconArrowBack className="w-4 h-4" /> Back to home
-              </Link>
-            </div>
+            )}
           </div>
         </div>
       </div>

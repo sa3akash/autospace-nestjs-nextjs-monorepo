@@ -16,8 +16,7 @@ export class ReviewWhereUniqueInput {
 
 @InputType()
 export class ReviewWhereInputStrict
-  implements
-    RestrictProperties<ReviewWhereInputStrict, Prisma.ReviewWhereInput>
+  implements RestrictProperties<ReviewWhereInputStrict, Prisma.ReviewWhereInput>
 {
   id: IntFilter;
   createdAt: DateTimeFilter;
