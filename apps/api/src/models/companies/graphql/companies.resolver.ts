@@ -44,7 +44,7 @@ export class CompaniesResolver {
   }
 
   @AllowAuthenticated()
-  @Query(() => Company)
+  @Query(() => Company, { nullable: true })
   myCompany(@GetUser() user: GetUserType) {
     return this.prisma.company.findFirst({
       where: { Managers: { some: { id: user.id } } },

@@ -3,7 +3,7 @@ import { MyCompanyDocument } from '@autospace/network/src/gql/generated';
 import { useQuery } from '@apollo/client';
 import { LoaderPanel } from '../molecules/Loader';
 import { AlertSection } from '../molecules/AlertSection';
-// import { CreateCompany } from './CreateCompany'
+import { CreateCompany } from './CreateCompany';
 import { ReactNode } from 'react';
 
 type RenderPropChild = (id: number) => ReactNode;
@@ -23,7 +23,7 @@ export const IsManager = ({
     return (
       <AlertSection>
         <div>You don&apos;t have a company yet.</div>
-        {/* <CreateCompany /> */}
+        <CreateCompany />
       </AlertSection>
     );
 

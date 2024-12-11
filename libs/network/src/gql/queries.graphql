@@ -14,16 +14,16 @@ mutation RegisterWithCredentials(
 
 query Companies(
   $distinct: [CompanyScalarFieldEnum!]
-  $where: CompanyWhereInput
   $orderBy: [CompanyOrderByWithRelationInput!]
+  $where: CompanyWhereInput
   $cursor: CompanyWhereUniqueInput
-  $skip: Int
-  $take: Int
+  $skip: Float
+  $take: Float
 ) {
   companies(
     distinct: $distinct
-    where: $where
     orderBy: $orderBy
+    where: $where
     cursor: $cursor
     skip: $skip
     take: $take
@@ -53,9 +53,10 @@ mutation Login($loginInput: LoginInput!) {
   }
 }
 
-query GetAuthProvider($id: String!, $providerAccountId: String!) {
-  getAuthProvider(id: $id, providerAccountId: $providerAccountId) {
-    id,type,
+query GetAuthProvider($getAuthProviderId: String!, $providerAccountId: String!) {
+  getAuthProvider(id: $getAuthProviderId, providerAccountId: $providerAccountId) {
+    type
+    id
     providerAccountId
   }
 }
@@ -67,7 +68,6 @@ mutation RegisterWithProvider(
     id
   }
 }
-
 query SearchGarages(
   $dateFilter: DateFilterInput!
   $locationFilter: LocationFilterInput!
@@ -124,13 +124,12 @@ mutation CreateCompany($createCompanyInput: CreateCompanyInput!) {
   }
 }
 
-query Address(
-  $skip: Int
-  $take: Int
+query Garages(
+  $skip: Float
+  $take: Float
   $cursor: GarageWhereUniqueInput
   $orderBy: [GarageOrderByWithRelationInput!]
   $where: GarageWhereInput
-  $distinct: [GarageScalarFieldEnum!]
 ) {
   garages(
     skip: $skip
@@ -138,32 +137,27 @@ query Address(
     cursor: $cursor
     orderBy: $orderBy
     where: $where
-    distinct: $distinct
   ) {
-    address {
-      address
-      createdAt
-      id
-      garageId
-      lat
-      lng
-    }
-    companyId
-    createdAt
-    description
-    displayName
     id
+    displayName
+    description
     images
-    updatedAt
     verification {
       verified
     }
+    address {
+      id
+      lat
+      lng
+      address
+    }
     slotCounts {
-      count
       type
+      count
     }
   }
-  garagesCount {
+
+  garagesCount(where: $where) {
     count
   }
 }
@@ -174,7 +168,7 @@ mutation CreateGarage($createGarageInput: CreateGarageInput!) {
   }
 }
 
-mutation CreateManySlots($createSlotInput: CreateSlotInput!, $count: Int!) {
+mutation CreateManySlots($createSlotInput: CreateSlotInput!, $count: Float!) {
   createManySlots(createSlotInput: $createSlotInput, count: $count) {
     count
   }
@@ -220,95 +214,49 @@ fragment BookingFields on Booking {
 }
 
 query BookingsForCustomer(
-  $distinct: [BookingScalarFieldEnum!]
-  $where: BookingWhereInput
-  $orderBy: [BookingOrderByWithRelationInput!]
+  $skip: Float
+  $take: Float
   $cursor: BookingWhereUniqueInput
-  $take: Int
-  $skip: Int
+  $orderBy: [BookingOrderByWithRelationInput!]
+  $where: BookingWhereInput
+  $distinct: [BookingScalarFieldEnum!]
 ) {
   bookingsForCustomer(
-    distinct: $distinct
-    where: $where
-    orderBy: $orderBy
-    cursor: $cursor
-    take: $take
     skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
+    distinct: $distinct
   ) {
-    createdAt
-    customerId
-    endTime
-    id
-    passcode
-    phoneNumber
-    pricePerHour
-    slotId
-    startTime
-    status
-    totalPrice
-    updatedAt
-    vehicleNumber
+    ...BookingFields
   }
-  bookingsCount {
+
+  bookingsCount(where: $where) {
     count
   }
 }
 
 query BookingsForGarage(
-  $distinct: [BookingScalarFieldEnum!]
-  $where: BookingWhereInput
-  $orderBy: [BookingOrderByWithRelationInput!]
+  $skip: Float
+  $take: Float
   $cursor: BookingWhereUniqueInput
-  $take: Int
-  $skip: Int
+  $orderBy: [BookingOrderByWithRelationInput!]
+  $where: BookingWhereInput
+  $distinct: [BookingScalarFieldEnum!]
 ) {
   bookingsForGarage(
-    distinct: $distinct
-    where: $where
-    orderBy: $orderBy
-    cursor: $cursor
-    take: $take
     skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
+    distinct: $distinct
   ) {
-    pricePerHour
-    totalPrice
-    phoneNumber
-    passcode
-    status
-    id
-    createdAt
-    updatedAt
-    startTime
-    endTime
-    vehicleNumber
-    slotId
-    customerId
-    slot {
-      id
-    }
-    customer {
-      id
-      displayName
-    }
-    bookingTimeline {
-      id
-      bookingId
-      managerId
-      status
-    }
-    valetAssignment {
-      bookingId
-      pickupValetId
-      pickupLat
-      pickupLng
-      returnLat
-      returnLng
-      returnValetId
-      updatedAt
-      createdAt
-    }
+    ...BookingFields
   }
-  bookingsCount {
+
+  bookingsCount(where: $where) {
     count
   }
 }
@@ -346,80 +294,45 @@ mutation CreateValet($createValetInput: CreateValetInput!) {
   }
 }
 
-query CompanyValets(
+query companyValets(
   $distinct: [ValetScalarFieldEnum!]
-  $where: ValetWhereInput
-  $orderBy: [ValetOrderByWithRelationInput!]
+  $skip: Float
+  $take: Float
   $cursor: ValetWhereUniqueInput
-  $take: Int
-  $skip: Int
+  $orderBy: [ValetOrderByWithRelationInput!]
+  $where: ValetWhereInput
 ) {
   companyValets(
     distinct: $distinct
-    where: $where
-    orderBy: $orderBy
-    cursor: $cursor
-    take: $take
     skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
   ) {
-    image
-    companyId
+    displayName
     id
     createdAt
     updatedAt
-    displayName
+    companyId
+    image
     licenceID
   }
-  companyValetsTotal
+
+  companyValetsTotal(where: $where)
 }
 
-query ValetPickups($take: Int, $skip: Int) {
-  valetPickups(take: $take, skip: $skip) {
-    pricePerHour
-    totalPrice
-    phoneNumber
-    passcode
-    status
+query valetPickups($skip: Float, $take: Float) {
+  valetPickups(skip: $skip, take: $take) {
     id
-    createdAt
-    updatedAt
-    startTime
-    endTime
     vehicleNumber
-    slotId
-    customerId
-    slot {
-      garage {
-        address {
-          lat
-          lng
-        }
-      }
-    }
-
     valetAssignment {
       pickupLat
       pickupLng
       pickupValetId
     }
-  }
-}
-
-query ExampleQuery($take: Int, $skip: Int) {
-  valetDrops(take: $take, skip: $skip) {
-    pricePerHour
-    totalPrice
-    phoneNumber
-    passcode
-    status
-    id
-    createdAt
-    updatedAt
     startTime
     endTime
-    vehicleNumber
-    slotId
-    customerId
     slot {
       garage {
         address {
@@ -428,16 +341,34 @@ query ExampleQuery($take: Int, $skip: Int) {
         }
       }
     }
+  }
+  valetPickupsTotal
+}
 
+query valetDrops($skip: Float, $take: Float) {
+  valetDrops(skip: $skip, take: $take) {
+    id
+    vehicleNumber
+    startTime
+    endTime
     valetAssignment {
       returnLat
       returnLng
       returnValetId
     }
+    slot {
+      garage {
+        address {
+          lat
+          lng
+        }
+      }
+    }
   }
+  valetDropsTotal
 }
 
-mutation AssignValet($bookingId: Int!, $status: String!) {
+mutation AssignValet($bookingId: Float!, $status: String!) {
   assignValet(bookingId: $bookingId, status: $status) {
     id
   }
@@ -460,57 +391,56 @@ fragment ValetBookingFields on Booking {
   }
 }
 
-# query myPickupTrips(
-#   $distinct: [BookingScalarFieldEnum!]
-#   $skip: Float
-#   $take: Float
-#   $orderBy: [BookingOrderByWithRelationInput!]
-#   $where: BookingWhereInput
-# ) {
-#   bookingsForValet(
-#     distinct: $distinct
-#     skip: $skip
-#     take: $take
-#     orderBy: $orderBy
-#     where: $where
-#   ) {
-#     ...ValetBookingFields
-#     valetAssignment {
-#       pickupLat
-#       pickupLng
-#       pickupValetId
-#     }
-#   }
-#   bookingsCount(where: $where) {
-#     count
-#   }
-# }
-
-# query myDropTrips(
-#   $distinct: [BookingScalarFieldEnum!]
-#   $skip: Float
-#   $take: Float
-#   $orderBy: [BookingOrderByWithRelationInput!]
-#   $where: BookingWhereInput
-# ) {
-#   bookingsForValet(
-#     distinct: $distinct
-#     skip: $skip
-#     take: $take
-#     orderBy: $orderBy
-#     where: $where
-#   ) {
-#     ...ValetBookingFields
-#     valetAssignment {
-#       returnLat
-#       returnLng
-#       returnValetId
-#     }
-#   }
-#   bookingsCount(where: $where) {
-#     count
-#   }
-# }
+query myPickupTrips(
+  $distinct: [BookingScalarFieldEnum!]
+  $skip: Float
+  $take: Float
+  $orderBy: [BookingOrderByWithRelationInput!]
+  $where: BookingWhereInput
+) {
+  bookingsForValet(
+    distinct: $distinct
+    skip: $skip
+    take: $take
+    orderBy: $orderBy
+    where: $where
+  ) {
+    ...ValetBookingFields
+    valetAssignment {
+      pickupLat
+      pickupLng
+      pickupValetId
+    }
+  }
+  bookingsCount(where: $where) {
+    count
+  }
+}
+query myDropTrips(
+  $distinct: [BookingScalarFieldEnum!]
+  $skip: Float
+  $take: Float
+  $orderBy: [BookingOrderByWithRelationInput!]
+  $where: BookingWhereInput
+) {
+  bookingsForValet(
+    distinct: $distinct
+    skip: $skip
+    take: $take
+    orderBy: $orderBy
+    where: $where
+  ) {
+    ...ValetBookingFields
+    valetAssignment {
+      returnLat
+      returnLng
+      returnValetId
+    }
+  }
+  bookingsCount(where: $where) {
+    count
+  }
+}
 
 mutation CreateVerification(
   $createVerificationInput: CreateVerificationInput!
@@ -534,30 +464,31 @@ mutation RemoveVerification($where: VerificationWhereUniqueInput!) {
   }
 }
 
-query Admins(
+query admins(
   $distinct: [AdminScalarFieldEnum!]
-  $where: AdminWhereInput
-  $orderBy: [AdminOrderByWithRelationInput!]
+  $skip: Float
+  $take: Float
   $cursor: AdminWhereUniqueInput
-  $take: Int
-  $skip: Int
+  $orderBy: [AdminOrderByWithRelationInput!]
+  $where: AdminWhereInput
 ) {
   admins(
     distinct: $distinct
-    where: $where
-    orderBy: $orderBy
-    cursor: $cursor
-    take: $take
     skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
   ) {
     id
-    createdAt
     updatedAt
     user {
       name
     }
+    createdAt
     verificationsCount
   }
+  adminsCount(where: $where)
 }
 
 mutation RemoveAdmin($where: AdminWhereUniqueInput!) {

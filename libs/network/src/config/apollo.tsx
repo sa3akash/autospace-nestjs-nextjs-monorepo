@@ -11,7 +11,7 @@ import { setContext } from '@apollo/client/link/context';
 import { SessionProvider, getSession } from 'next-auth/react';
 
 export interface IApolloProviderProps {
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
 }
 
 export const ApolloProvider = ({ children }: IApolloProviderProps) => {
@@ -38,9 +38,8 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
   });
 
   return (
-    // @ts-ignore
-    <Provider client={apolloClient}>
-      <SessionProvider>{children}</SessionProvider>
-    </Provider>
+    <SessionProvider>
+      <Provider client={apolloClient}>{children}</Provider>
+    </SessionProvider>
   );
 };

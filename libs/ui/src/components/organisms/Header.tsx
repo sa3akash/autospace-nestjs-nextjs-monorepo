@@ -33,7 +33,7 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
           <div className="flex items-center gap-2">
             {id ? (
               <div className="flex gap-6 items-center">
-                <div className="text-sm mr-6 flex gap-3">
+                <div className="text-sm mr-6 gap-3 hidden md:flex">
                   <Menus menuItems={menuItems} />
                 </div>
 

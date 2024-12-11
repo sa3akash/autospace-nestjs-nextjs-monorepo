@@ -51,7 +51,7 @@ export class AuthGuard implements CanActivate {
         );
       }
 
-      console.log('jwt payload: ', payload);
+      // console.log('jwt payload: ', payload);
       req.user = payload;
     } catch (err) {
       console.error('Token validation error:', err);

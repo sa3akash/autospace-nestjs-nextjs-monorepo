@@ -177,7 +177,7 @@ export const authOptions: NextAuthConfig = {
         const existingUser = await fetchGraphQL({
           document: GetAuthProviderDocument,
           variables: {
-            id: '',
+            getAuthProviderId: '',
             providerAccountId: account.providerAccountId,
           },
         });

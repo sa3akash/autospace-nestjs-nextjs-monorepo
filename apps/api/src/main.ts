@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'http://localhost:3001',
+    // origin: ['http://localhost:3001', 'https://localhost:3002'],
   });
 
   const config = new DocumentBuilder()
@@ -21,8 +21,8 @@ You might also need to use the <a target="_blank" href="https://studio.apollogra
 
       `,
     )
-    // .setVersion('0.1')
-    // .addBearerAuth()
+    .setVersion('0.1')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
