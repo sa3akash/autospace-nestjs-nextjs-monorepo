@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import {
   IconPhotoCancel,
   IconChevronLeft,
   IconChevronRight,
 } from '@tabler/icons-react';
-import Image from 'next/image';
 
 export interface IAutoImageChangerProps {
   images: string[];
@@ -40,12 +40,13 @@ export const AutoImageChanger = ({
 
   return (
     <div className={`relative w-full overflow-hidden ${aspectRatio}`}>
-      <Image
+      <img
         src={images[currentImageIndex]}
         alt="Garage"
         className="object-cover h-full w-full"
         // width={100}
         // height={100}
+        // quality={100}
       />
       <div className="absolute bottom-0 left-0 right-0 flex justify-center p-1 space-x-2">
         {images.map((_, index) => (

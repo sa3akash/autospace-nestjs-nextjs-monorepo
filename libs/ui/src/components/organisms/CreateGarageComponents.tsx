@@ -45,6 +45,7 @@ export const AddSlots = () => {
   });
 
   const { slotTypes } = useWatch<FormTypeCreateGarage>();
+
   return (
     <div>
       {fields.map((item, slotIndex) => (
@@ -53,10 +54,7 @@ export const AddSlots = () => {
           key={item.id}
           title={
             <div>
-              <div>
-                {' '}
-                {slotTypes?.[slotIndex]?.type} x {slotTypes?.[slotIndex]?.count}
-              </div>
+              {slotTypes?.[slotIndex]?.type} x {slotTypes?.[slotIndex]?.count}
             </div>
           }
         >

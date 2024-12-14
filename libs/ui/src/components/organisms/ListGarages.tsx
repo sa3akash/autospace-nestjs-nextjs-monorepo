@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 import { ShowData } from './ShowData';
 import { IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
-//   import { GarageCard } from './GarageCard'
+import { GarageCard } from './GarageCard';
 
 export const ListGarages = ({ companyId }: { companyId: number }) => {
   const { setSkip, setTake, skip, take } = useTakeSkip();
@@ -32,7 +32,7 @@ export const ListGarages = ({ companyId }: { companyId: number }) => {
         setSkip,
         setTake,
       }}
-      childrenClassName="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3"
+      childrenClassName="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
       title={
         <div className="flex items-center gap-4">
           <div>Garages</div>
@@ -46,8 +46,7 @@ export const ListGarages = ({ companyId }: { companyId: number }) => {
       }
     >
       {data?.garages.map((garage) => (
-        // <GarageCard key={garage.id} garage={garage} />
-        <div key={garage.id}>Garage ID: {garage.id}</div>
+        <GarageCard key={garage.id} garage={garage} />
       ))}
     </ShowData>
   );

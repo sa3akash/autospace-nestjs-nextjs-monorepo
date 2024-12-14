@@ -57,36 +57,32 @@ const CreateGarageContent = () => {
     },
   });
 
+  const createGarageWithSlot = async ({
+    images,
+    description,
+    displayName,
+    location,
+    slotTypes,
+  }: FormTypeCreateGarage) => {
+    const uploadedImages = await upload(images);
+
+    await createGarage({
+      variables: {
+        createGarageInput: {
+          Address: location,
+          images: uploadedImages,
+          Slots: slotTypes,
+          description,
+          displayName,
+        },
+      },
+    });
+  };
+
   return (
     <div className="grid md:grid-cols-2 gap-2 mt-2 ">
       <div>
-        <Form
-          onSubmit={handleSubmit(
-            async ({
-              images,
-              description,
-              displayName,
-              location,
-              slotTypes,
-            }) => {
-              const uploadedImages = await upload(images);
-
-              const result = await createGarage({
-                variables: {
-                  createGarageInput: {
-                    Address: location,
-                    images: uploadedImages,
-                    Slots: slotTypes,
-                    description,
-                    displayName,
-                  },
-                },
-              });
-
-              console.log(result);
-            },
-          )}
-        >
+        <Form onSubmit={handleSubmit(createGarageWithSlot)}>
           <HtmlLabel error={errors.displayName?.message} title="Display Name">
             <HtmlInput {...register('displayName')} placeholder="Garage name" />
           </HtmlLabel>

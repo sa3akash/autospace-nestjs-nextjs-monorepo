@@ -1,10 +1,12 @@
 'use client';
+
 import { MyCompanyDocument } from '@autospace/network/src/gql/generated';
 import { useQuery } from '@apollo/client';
 import { LoaderPanel } from '../molecules/Loader';
 import { AlertSection } from '../molecules/AlertSection';
 import { CreateCompany } from './CreateCompany';
 import { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 type RenderPropChild = (id: number) => ReactNode;
 
@@ -13,7 +15,14 @@ export const IsManager = ({
 }: {
   children: RenderPropChild | ReactNode;
 }) => {
-  const { data, loading } = useQuery(MyCompanyDocument);
+  const { data, loading, error } = useQuery(MyCompanyDocument);
+
+  const router = useRouter();
+
+  if (error) {
+    router.replace('login');
+    return;
+  }
 
   if (loading) {
     return <LoaderPanel text="Loading company..." />;
