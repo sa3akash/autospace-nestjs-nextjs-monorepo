@@ -4,6 +4,7 @@ import '@autospace/ui/src/app/globals.css';
 import { ApolloProvider } from '@autospace/network/src/config/apollo';
 import { Header } from '@autospace/ui/src/components/organisms/Header';
 import { MenuItem } from '@autospace/utils/types';
+import { Container } from '@autospace/ui/src/components/atoms/Container';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -38,7 +39,9 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Header menuItems={MENUITEMS} />
-          {children}
+          <Container>
+            {children}
+          </Container>
         </body>
       </ApolloProvider>
     </html>

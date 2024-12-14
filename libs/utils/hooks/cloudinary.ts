@@ -28,7 +28,8 @@ export const useCloudinaryUpload = () => {
         }
 
         const data = await response.json();
-        console.log(data);
+        
+        
         const imageUrl = data.secure_url as string;
 
         return imageUrl;

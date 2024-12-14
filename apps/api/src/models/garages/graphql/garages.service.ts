@@ -50,11 +50,15 @@ export class GaragesService {
   }
 
   update(updateGarageInput: UpdateGarageInput) {
-    const { id, Address, Slots, ...data } = updateGarageInput;
-    console.log({ Address, Slots });
+    const { id, description, displayName, images } = updateGarageInput;
+
     return this.prisma.garage.update({
       where: { id },
-      data: data,
+      data: {
+        description: description,
+        displayName: displayName,
+        images: images,
+      },
     });
   }
 

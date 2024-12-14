@@ -45,8 +45,8 @@ export class StripeController {
     const { bookingData } = session.metadata;
 
     const bookingInput: CreateBookingInput = JSON.parse(bookingData);
-    const newBooking = await this.bookingService.create(bookingInput);
-    console.log(newBooking);
+    await this.bookingService.create(bookingInput);
+
     res.redirect(process.env.BOOKINGS_REDIRECT_URL);
   }
 }
