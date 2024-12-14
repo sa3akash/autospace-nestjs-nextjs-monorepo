@@ -39,9 +39,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Header menuItems={MENUITEMS} />
-          <Container>
-            {children}
-          </Container>
+          <Container>{children}</Container>
         </body>
       </ApolloProvider>
     </html>

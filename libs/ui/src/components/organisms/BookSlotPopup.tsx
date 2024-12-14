@@ -87,8 +87,7 @@ export const BookSlotPopup = ({
     try {
       setBooking(true);
       // Create booking session
-       await createBookingSession(id!, totalPriceObj, bookingData);
-      
+      await createBookingSession(id!, totalPriceObj, bookingData);
     } catch {
       toast('An error occurred while creating the booking session.');
     } finally {
