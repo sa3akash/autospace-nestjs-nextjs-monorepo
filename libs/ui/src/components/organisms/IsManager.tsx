@@ -6,7 +6,7 @@ import { LoaderPanel } from '../molecules/Loader';
 import { AlertSection } from '../molecules/AlertSection';
 import { CreateCompany } from './CreateCompany';
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 type RenderPropChild = (id: number) => ReactNode;
 
@@ -17,11 +17,8 @@ export const IsManager = ({
 }) => {
   const { data, loading, error } = useQuery(MyCompanyDocument);
 
-  const router = useRouter();
-
-  if (error) {
-    router.replace('login');
-    return;
+  if (error?.message.includes('jwt')) {
+    signOut({ redirectTo: '/login' });
   }
 
   if (loading) {

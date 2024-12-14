@@ -18,8 +18,6 @@ export const ListGarages = ({ companyId }: { companyId: number }) => {
     },
   });
 
-  console.log(data);
-
   return (
     <ShowData
       error={error?.message}

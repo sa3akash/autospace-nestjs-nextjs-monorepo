@@ -31,7 +31,7 @@ export const CreateManySlotsDialog = ({ garageId }: { garageId: number }) => {
       toast('Slots created successfully.');
     },
     onError() {
-      toast('Action failed.');
+      toast('Action failed. Try again.');
     },
   });
 
