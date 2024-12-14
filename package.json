@@ -20,7 +20,7 @@
     "tsc": "yarn nx run-many -t tsc",
     "lint": "yarn nx run-many -t lint",
     "build": "yarn nx run-many -t build",
-    "validate": "yarn format:write && yarn tsc && yarn lint",
+    "validate": "yarn format:write && yarn tsc && yarn lint && yarn tsc",
     "prepare": "husky install"
   },
   "keywords": [],

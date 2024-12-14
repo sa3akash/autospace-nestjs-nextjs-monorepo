@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
-    "@autospace/network": "*",
-    "@autospace/sample": "*",
     "@autospace/ui": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

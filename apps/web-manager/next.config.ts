@@ -5,8 +5,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
         hostname: 'res.cloudinary.com',
+      },
+      {
+        hostname: 'api.mapbox.com',
       },
     ],
   },
