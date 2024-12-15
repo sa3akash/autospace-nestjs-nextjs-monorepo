@@ -32,10 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-25`}
       >
         <ApolloProvider>
-          <Header type="manager" menuItems={MENUITEMS} />
+          <Header type="valet" menuItems={MENUITEMS} />
           <Container>{children}</Container>
         </ApolloProvider>
         <ToastContainer />

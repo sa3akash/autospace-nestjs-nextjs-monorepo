@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <ApolloProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-25`}
         >
           <Header menuItems={MENUITEMS} />
           <Container>{children}</Container>
