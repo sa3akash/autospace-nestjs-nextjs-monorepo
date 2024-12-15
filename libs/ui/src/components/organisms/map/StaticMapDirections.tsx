@@ -53,7 +53,7 @@ export const StaticMapDirections = ({
       height={300}
       src={url}
       alt="Map"
-      className={` ${className}`}
+      className={`${className}`}
     />
   );
 };
