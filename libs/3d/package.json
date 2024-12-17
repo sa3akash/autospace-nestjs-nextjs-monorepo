@@ -1,0 +1,22 @@
+{
+  "name": "@autospace/3d",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-three/drei": "^9.120.4",
+    "@react-three/fiber": "9.0.0-rc.1",
+    "three": "^0.171.0",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.171.0",
+    "@types/react": "^19"
+  }
+}
