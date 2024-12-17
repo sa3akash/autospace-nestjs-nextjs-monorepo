@@ -47,7 +47,7 @@ export class AdminsResolver {
   }
 
   @AllowAuthenticated()
-  @Query(() => Admin, { name: 'adminMe' })
+  @Query(() => Admin, { name: 'adminMe', nullable: true })
   adminMe(@GetUser() user: GetUserType) {
     return this.adminsService.findOne({ where: { id: user.id } });
   }
